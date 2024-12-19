@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFO Buddy</title>
+</head>
+<body>
+    <h1>CFO Buddy: Your Financial Analysis Assistant</h1>
+    <form action="/process_files" method="POST" enctype="multipart/form-data">
+        <label>Upload Financial Reports:</label>
+        <input type="file" name="files" multiple><br><br>
+        <label>Company Domain:</label>
+        <input type="text" name="company_domain"><br><br>
+        <label>Primary Product:</label>
+        <input type="text" name="product_focus"><br><br>
+        <label>Employee Strength:</label>
+        <select name="employee_strength">
+            <option value="0-10">0-10</option>
+            <option value="10-100">10-100</option>
+            <option value="100-1,000">100-1,000</option>
+            <option value="1,000-10,000">1,000-10,000</option>
+            <option value="10,000+">10,000+</option>
+        </select><br><br>
+        <button type="submit">Process Files</button>
+    </form>
+
+    <form action="/submit" method="POST">
+        <label>Ask Your Financial Question:</label><br>
+        <textarea name="query"></textarea><br><br>
+        <input type="hidden" name="company_domain" value="{{ company_domain }}">
+        <input type="hidden" name="product_focus" value="{{ product_focus }}">
+        <input type="hidden" name="employee_strength" value="{{ employee_strength }}">
+        <input type="hidden" name="financial_data" value="{{ financial_data }}">
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if table %}
+        <h3>Comparative Table:</h3>
+        {{ table|safe }}
+    {% endif %}
+</body>
+</html>
