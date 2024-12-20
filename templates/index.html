@@ -5,41 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CFO Buddy</title>
     <!-- Link to the external CSS file -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>CFO Buddy: Your Financial Analysis Assistant</h1>
-    <form action="/process_files" method="POST" enctype="multipart/form-data">
-        <label>Upload Financial Reports:</label>
-        <input type="file" name="files" multiple><br><br>
-        <label>Company Domain:</label>
-        <input type="text" name="company_domain"><br><br>
-        <label>Primary Product:</label>
-        <input type="text" name="product_focus"><br><br>
-        <label>Employee Strength:</label>
-        <select name="employee_strength">
-            <option value="0-10">0-10</option>
-            <option value="10-100">10-100</option>
-            <option value="100-1,000">100-1,000</option>
-            <option value="1,000-10,000">1,000-10,000</option>
-            <option value="10,000+">10,000+</option>
-        </select><br><br>
-        <button type="submit">Process Files</button>
-    </form>
+    <div class="sidebar">
+        <h2>CFO Buddy</h2>
+        <form action="/process_files" method="POST" enctype="multipart/form-data">
+            <label for="files">Upload Financial Reports:</label>
+            <input type="file" id="files" name="files" multiple><br>
+            
+            <label for="company_domain">Company Domain:</label>
+            <input type="text" id="company_domain" name="company_domain"><br>
+            
+            <label for="product_focus">Primary Product:</label>
+            <input type="text" id="product_focus" name="product_focus"><br>
+            
+            <label for="employee_strength">Employee Strength:</label>
+            <select id="employee_strength" name="employee_strength">
+                <option value="0-10">0-10</option>
+                <option value="10-100">10-100</option>
+                <option value="100-1,000">100-1,000</option>
+                <option value="1,000-10,000">1,000-10,000</option>
+                <option value="10,000+">10,000+</option>
+            </select><br>
+            
+            <button type="submit">Process Files</button>
+        </form>
+    </div>
 
-    <form action="/submit" method="POST">
-        <label>Ask Your Financial Question:</label><br>
-        <textarea name="query"></textarea><br><br>
-        <input type="hidden" name="company_domain" value="{{ company_domain }}">
-        <input type="hidden" name="product_focus" value="{{ product_focus }}">
-        <input type="hidden" name="employee_strength" value="{{ employee_strength }}">
-        <input type="hidden" name="financial_data" value="{{ financial_data }}">
-        <button type="submit">Submit</button>
-    </form>
+    <div class="main-content">
+        <h1>Ask Your Financial Question</h1>
+        <form action="/submit" method="POST">
+            <textarea name="query" placeholder="Type your financial question here..."></textarea><br>
+            <input type="hidden" name="company_domain" value="{{ company_domain }}">
+            <input type="hidden" name="product_focus" value="{{ product_focus }}">
+            <input type="hidden" name="employee_strength" value="{{ employee_strength }}">
+            <input type="hidden" name="financial_data" value="{{ financial_data }}">
+            <button type="submit">Submit</button>
+        </form>
 
-    {% if table %}
-        <h3>Comparative Table:</h3>
-        {{ table|safe }}
-    {% endif %}
+        {% if table %}
+            <div id="response">
+                <h3>Comparative Table:</h3>
+                {{ table|safe }}
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
